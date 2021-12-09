@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  align-items: center;
+
+  .homeLink {
+    margin-right: 5px;
+    img {
+      width: 22px;
+    }
+  }
+
+  .separator {
+    margin-right: 5px;
+    img {
+      width: 16px;
+      opacity: 70%;
+    }
+  }
+
+  .link {
+    padding-top: 2px;
+    span {
+      font-size: 16px;
+    }
+  }
+}
