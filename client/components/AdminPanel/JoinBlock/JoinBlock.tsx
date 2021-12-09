@@ -1,7 +1,8 @@
 import React from "react";
-import styles from "components/AdminPanel/Chat/ChatPage.module.scss";
 import axios from "axios";
-import { notification } from "antd";
+import openNotification from "utils/notifications";
+
+import styles from "./JoinBlock.module.scss";
 
 const JoinBlock = ({ onLogin }: any) => {
   const [roomId, setRoomId] = React.useState("");
@@ -10,7 +11,7 @@ const JoinBlock = ({ onLogin }: any) => {
 
   const onEnter = async () => {
     if (!roomId || !userName) {
-      return openNotification;
+      return openNotification("Возникла ошибка", "Неправильные данные!");
     }
     const obj = {
       roomId,
@@ -19,20 +20,6 @@ const JoinBlock = ({ onLogin }: any) => {
     setLoading(true);
     await axios.post(`${process.env.API_URL}` + "/api/sockets/rooms", obj);
     onLogin(obj);
-  };
-
-  const openNotification = (message: string, description: string) => {
-    notification.open({
-      message: message,
-      description: description,
-      icon: (
-        <img
-          className={styles.icon}
-          src="/static/images/profile/cancel.png"
-          alt="cancel-icon"
-        />
-      ),
-    });
   };
 
   return (

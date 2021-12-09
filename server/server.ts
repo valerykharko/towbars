@@ -56,7 +56,7 @@ io.on("connection", (socket) => {
     rooms.forEach((value, roomId) => {
       if (value.get("users").delete(socket.id)) {
         const users = [...value.get("users").values()];
-        socket.to(roomId).broadcast.emit("ROOM:SET_USERS", users);
+        socket.in(roomId).emit("ROOM:SET_USERS", users);
       }
     });
   });

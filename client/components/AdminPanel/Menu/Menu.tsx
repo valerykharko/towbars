@@ -12,6 +12,8 @@ import {
 } from "@ant-design/icons";
 import { WechatOutlined } from "@ant-design/icons/lib/icons";
 
+import styles from "./Menu.module.scss"
+
 const MenuAdmin = () => {
   const [state, setState] = useState(false);
 
@@ -22,8 +24,8 @@ const MenuAdmin = () => {
   const router = useRouter();
 
   return (
-    <div>
-      <div style={{ width: 256 }}>
+    <div className={styles.menuContainer}>
+      <div>
         <Button
           type="primary"
           onClick={toggleCollapsed}
