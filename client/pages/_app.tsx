@@ -9,8 +9,8 @@ import "../styles/globals.css";
 const App: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   return (
     <>
-      {/*<Header />*/}
-      {/*<Navbar />*/}
+      <Header />
+      <Navbar />
       <Component {...pageProps} />
     </>
   );

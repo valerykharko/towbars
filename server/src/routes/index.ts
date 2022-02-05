@@ -11,6 +11,7 @@ import {
   generationRouter,
   bodyStyleRouter,
   socketRouter,
+  orderRouter,
 } from "./router";
 
 const router = express.Router();
@@ -26,5 +27,6 @@ router.use("/autos/generations", generationRouter);
 router.use("/autos/body-styles", bodyStyleRouter);
 router.use("/autos", autoRouter);
 router.use("/sockets", socketRouter);
+router.use("/orders", orderRouter);
 
 export default router;

@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import { AuthResponse } from "http/response/AuthResponse";
 import $api from "./index";
+import IUser from "interfaces/user";
 
 export default class AuthService {
   static async registration(
@@ -19,5 +20,17 @@ export default class AuthService {
 
   static async logout(): Promise<void> {
     return $api.post("/auth/logout");
+  }
+
+  static async editInfo(
+    firstName: string,
+    secondName: string,
+    phoneNumber: string
+  ): Promise<AxiosResponse<IUser>> {
+    return $api.patch<IUser>("/auth/user", {
+      firstName,
+      secondName,
+      phoneNumber,
+    });
   }
 }

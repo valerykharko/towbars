@@ -4,7 +4,7 @@ import Router from "next/router";
 
 import { Button, Checkbox, Form, Input } from "antd";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
-import { login } from "store/actions/userAction";
+import { login } from "store/actions/userActions";
 import { useActions } from "hooks/useActions";
 
 import styles from "./LoginForm.module.scss";
@@ -15,9 +15,9 @@ const LoginForm = () => {
 
   const { login } = useActions();
 
-  const onFinish = (values: { email: string; password: string }) => {
-    login(values.email, values.password);
-    Router.push("/");
+  const onFinish = async (values: { email: string; password: string }) => {
+    await Promise.all([login(values.email, values.password)]);
+    localStorage.getItem("token") && Router.push("/");
   };
 
   return (

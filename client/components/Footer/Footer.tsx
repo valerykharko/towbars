@@ -4,7 +4,7 @@ import styles from "./Footer.module.scss";
 
 const Footer = () => {
   return (
-    <footer>
+    <div>
       <div className={styles.footer}>
         <div className={styles.left}>
           <div>
@@ -45,7 +45,7 @@ const Footer = () => {
           <span>Онлайн-заказы принимаются на сайте круглосуточно (24/7)</span>
         </div>
       </div>
-    </footer>
+    </div>
   );
 };
 

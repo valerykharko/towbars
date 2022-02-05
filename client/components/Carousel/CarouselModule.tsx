@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Carousel from "react-multi-carousel";
+import { useTypedSelector } from "hooks/useTypedSelector";
+import { useActions } from "hooks/useActions";
 
 import "react-multi-carousel/lib/styles.css";
 import styles from "./CarouselModule.module.scss";
@@ -24,6 +26,14 @@ const responsive = {
 };
 
 const CarouselModule = () => {
+  const { manufacturers } = useTypedSelector((state) => state.manufacturer);
+
+  const { fetchManufacturers } = useActions();
+
+  useEffect(() => {
+    fetchManufacturers();
+  }, []);
+
   return (
     <div className={styles.carouselBlock}>
       <span>Производители</span>
@@ -35,36 +45,17 @@ const CarouselModule = () => {
           autoPlay={true}
           infinite={true}
         >
-          <div>
-            <img
-              className={styles.carouselImages}
-              src="https://a.d-cd.net/nkAAAgBW4-A-960.jpg"
-            />
-          </div>
-          <div>
-            <img
-              className={styles.carouselImages}
-              src="https://a.d-cd.net/nkAAAgBW4-A-960.jpg"
-            />
-          </div>
-          <div>
-            <img
-              className={styles.carouselImages}
-              src="https://a.d-cd.net/nkAAAgBW4-A-960.jpg"
-            />
-          </div>
-          <div>
-            <img
-              className={styles.carouselImages}
-              src="https://a.d-cd.net/nkAAAgBW4-A-960.jpg"
-            />
-          </div>
-          <div>
-            <img
-              className={styles.carouselImages}
-              src="https://a.d-cd.net/nkAAAgBW4-A-960.jpg"
-            />
-          </div>
+          {manufacturers
+            .filter((elem) => elem?.img !== null)
+            .map((elem) => (
+              <div key={elem.id}>
+                <img
+                  className={styles.carouselImages}
+                  src={process.env.API_URL! + "/" + elem?.img[0]}
+                  alt="manufacturer-logo"
+                />
+              </div>
+            ))}
         </Carousel>
       </div>
     </div>

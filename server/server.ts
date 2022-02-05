@@ -23,9 +23,11 @@ server.use(cookieParser());
 server.use(cors({ credentials: true, origin: process.env.CLIENT_URL }));
 server.use(express.urlencoded({ extended: false }));
 server.use(
-  express.static(path.resolve(__dirname, "database/static/documents"))
+  express.static(path.resolve(__dirname, "src/database/static/documents"))
 );
-server.use(express.static(path.resolve(__dirname, "database/static/images")));
+server.use(
+  express.static(path.resolve(__dirname, "src/database/static/images"))
+);
 server.use(fileUpload({}));
 server.use("/api", router);
 
@@ -60,8 +62,6 @@ io.on("connection", (socket) => {
       }
     });
   });
-
-  console.log("user connected", socket.id);
 });
 
 const start = async () => {

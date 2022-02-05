@@ -1,4 +1,5 @@
 import express from "express";
+import jwt from "jsonwebtoken";
 import { validationResult } from "express-validator";
 import userService from "../../services/user/userService";
 import ApiError from "../../errors/ApiError";
@@ -24,6 +25,7 @@ export default class UserController {
       });
       return res.json(userData);
     } catch (e) {
+      console.log(e);
       next(e);
     }
   }
@@ -42,6 +44,7 @@ export default class UserController {
       });
       return res.json(userData);
     } catch (e) {
+      console.log(e);
       next(e);
     }
   }
@@ -71,6 +74,7 @@ export default class UserController {
       await userService.activate(activationLink);
       return res.redirect(process.env.CLIENT_URL);
     } catch (e) {
+      console.log(e);
       next(e);
     }
   }
@@ -89,6 +93,7 @@ export default class UserController {
       });
       return res.json(userData);
     } catch (e) {
+      console.log(e);
       next(e);
     }
   }
@@ -102,6 +107,28 @@ export default class UserController {
       const users = await userService.getAllUsers();
       return res.json(users);
     } catch (e) {
+      next(e);
+    }
+  }
+
+  static async editUser(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    try {
+      const { firstName, secondName, phoneNumber } = req.body;
+      const token = req.headers.authorization.split(" ")[1];
+      const { id } = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+      const user = await userService.editInfo(
+        firstName,
+        secondName,
+        phoneNumber,
+        id
+      );
+      return res.json(user);
+    } catch (e) {
+      console.log(e);
       next(e);
     }
   }

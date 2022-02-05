@@ -1,4 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useTypedSelector } from "hooks/useTypedSelector";
+import { useActions } from "hooks/useActions";
+import { setSortValue } from "store/actions/sortActions";
+
+import styles from "./SortBlock.module.scss";
 
 const SortBlock = () => {
   const sortItems = [
@@ -8,14 +13,15 @@ const SortBlock = () => {
     { name: "Сначала дорогие" },
     { name: "По рейтингу" },
   ];
-  const [value, setValue] = useState("Популярные");
   const [visiblePopup, setVisiblePopup] = useState(false);
-  const sortRef = useRef();
 
-  const onSelectItem = (index) => {
-    if (onClickSortType) {
-      onClickSortType(index);
-    }
+  const sortRef = useRef<HTMLDivElement>(null);
+
+  const { sortValue } = useTypedSelector((state) => state.sort);
+  const { setSortValue } = useActions();
+
+  const onSelectItem = (value: string) => {
+    setSortValue(value);
     setVisiblePopup(false);
   };
 
@@ -23,7 +29,7 @@ const SortBlock = () => {
     setVisiblePopup(!visiblePopup);
   };
 
-  const handleOutSideClick = (event) => {
+  const handleOutSideClick = (event: any) => {
     const path = event.path || (event.composedPath && event.composedPath());
     if (!path.includes(sortRef.current)) {
       setVisiblePopup(false);
@@ -36,17 +42,24 @@ const SortBlock = () => {
 
   return (
     <div ref={sortRef}>
-      <div>
-        <span onClick={toggleVisiblePopup}>{activeName}</span>
+      <div className={styles.sortBlock} onClick={toggleVisiblePopup}>
+        <span>{sortValue}</span>
+        {visiblePopup ? (
+          <img src="/static/images/arrows/up-arrow.png" alt="up-arrow" />
+        ) : (
+          <img src="/static/images/arrows/down-arrow.png" alt="down-arrow" />
+        )}
       </div>
       {visiblePopup && (
-        <div className="sort__popup">
+        <div className={styles.sortPopup}>
           <ul>
-            {items &&
-              items.map((obj, index) => (
+            {sortItems &&
+              sortItems.map((obj) => (
                 <li
-                  className={activeSortType === obj.type ? "active" : ""}
-                  onClick={() => onSelectItem(obj)}
+                  className={
+                    sortValue === obj.name ? styles.activeSort : styles.sort
+                  }
+                  onClick={() => onSelectItem(obj.name)}
                   key={obj.name}
                 >
                   {obj.name}

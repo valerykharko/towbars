@@ -22,11 +22,13 @@ export default class ManufacturerController {
     }
   }
 
-  static async getOne(req, res) {
-    const { id } = req.params;
-    const brand = await Manufacturer.findOne({
-      where: { id },
-    });
-    return res.json(brand);
+  static async getOne(req, res, next) {
+    try {
+      const { id } = req.params;
+      const manufacturer = await manufacturerService.getOneById(id);
+      return res.json(manufacturer);
+    } catch (e) {
+      next(e);
+    }
   }
 }

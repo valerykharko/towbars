@@ -15,10 +15,11 @@ export const userReducer = (
       return {
         ...state,
         user: action.payload,
-        isAuth: true,
       };
     case UserActionsTypes.SET_IS_AUTH:
       return { ...state, isAuth: action.payload };
+    case UserActionsTypes.EDIT_USER:
+      return { ...state };
     default:
       return state;
   }

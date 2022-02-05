@@ -9,3 +9,4 @@ export { default as wiringKitRouter } from "./catalog/wiringKitRouter";
 export { default as accessoryRouter } from "./catalog/accessoryRouter";
 export { default as manufacturerRouter } from "./manufacturer/manufacturerRouter";
 export { default as socketRouter } from "./socket/socketRouter";
+export { default as orderRouter } from "./order/orderRouter";

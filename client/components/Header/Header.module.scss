@@ -132,6 +132,64 @@
       }
     }
 
+    .blockCartFull {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 65px;
+      width: 65px;
+      cursor: pointer;
+      transition: 0.5s;
+
+      &:hover {
+        border-radius: 10px;
+        background-color: #f0f0f3;
+        box-shadow: 0 2px 2px 2px #d3d3d6;
+
+        img {
+          transform: scale(1.05);
+        }
+
+        span {
+          color: #2f4f4f;
+          font-weight: bold;
+        }
+      }
+
+      img {
+        padding: 5px 0;
+        margin-right: 7px;
+        width: 30px;
+      }
+
+      span {
+        text-align: center;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .cartCount {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 20px;
+        height: 20px;
+        margin: 0 0 30px 30px;
+        position: absolute;
+        padding: 5px;
+        border-radius: 50%;
+        outline: 1px solid gray;
+        background-color: #fefefe;
+
+        span {
+          font-size: 15px;
+          font-weight: bold;
+          color: cornflowerblue;
+        }
+      }
+    }
+
     .blockAuto {
       display: flex;
       flex-direction: column;

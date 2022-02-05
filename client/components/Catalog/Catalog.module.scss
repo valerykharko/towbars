@@ -110,47 +110,6 @@
         }
       }
 
-      .manufacturers {
-        margin-top: 25px;
-
-        .manufacturersTitle {
-          margin-bottom: 15px;
-          span {
-            font-size: 16px;
-            font-weight: bold;
-          }
-        }
-        .listOf {
-          margin-left: 5px;
-          div {
-            margin-bottom: 12px;
-            span {
-              font-size: 16px;
-              font-weight: normal;
-            }
-            input {
-              margin-right: 17px;
-              transform: scale(1.4);
-              cursor: pointer;
-              color: #62d2a2;
-              background-color: #62d2a2;
-
-              [type="checkbox"]:checked {
-                color: #62d2a2;
-              }
-
-              &:checked {
-                color: #62d2a2;
-              }
-
-              &:focus {
-                color: #62d2a2;
-              }
-            }
-          }
-        }
-      }
-
       .IsBumperCutOut {
         margin-top: 20px;
         display: flex;
@@ -210,5 +169,29 @@
     display: flex;
     flex-direction: column;
     flex: 0 1 80%;
+
+    .searchBlock {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .filters {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .totalCount {
+        span {
+          font-size: 16px;
+        }
+
+        span:nth-child(2) {
+          font-size: 16px;
+          font-weight: bold;
+        }
+      }
+    }
   }
 }

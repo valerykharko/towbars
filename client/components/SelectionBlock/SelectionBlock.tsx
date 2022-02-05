@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { DropDownList } from "components/index";
+import Router from "next/router";
+import { DropDownList } from "components";
 import { useTypedSelector } from "hooks/useTypedSelector";
 import { useActions } from "hooks/useActions";
 
@@ -121,6 +122,7 @@ const SelectionBlock = () => {
       </div>
       <div className={styles.mainButton}>
         <button
+          onClick={() => Router.push("/catalog")}
           disabled={
             !(brandActive && modelActive && generationActive && bodyStyleValue)
           }

@@ -1,4 +1,4 @@
-import Sequelize, { DataTypes, ModelDefined } from "sequelize";
+import Sequelize, { DataTypes } from "sequelize";
 import sequelize from "../../database/db";
 
 export const Token: any = sequelize.define("token", {
@@ -25,6 +25,17 @@ export const User: any = sequelize.define("user", {
   isActivated: { type: DataTypes.BOOLEAN, defaultValue: false },
   activationLink: { type: DataTypes.STRING },
   role: { type: DataTypes.STRING, defaultValue: "USER" },
+});
+
+export const Order: any = sequelize.define("order", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  items: { type: DataTypes.ARRAY(Sequelize.JSON), allowNull: false },
+  date: { type: DataTypes.DATE, allowNull: false, defaultValue: Date.now() },
+  firstName: { type: DataTypes.STRING, allowNull: false },
+  secondName: { type: DataTypes.STRING, allowNull: false },
+  phoneNumber: { type: DataTypes.STRING, allowNull: false },
+  totalPrice: { type: DataTypes.INTEGER, allowNull: false },
+  totalCount: { type: DataTypes.INTEGER, allowNull: false },
 });
 
 export const Basket: any = sequelize.define("basket", {
@@ -60,7 +71,7 @@ export const Towbar: any = sequelize.define("towbar", {
   img: { type: DataTypes.ARRAY(Sequelize.STRING), allowNull: true },
   doc: { type: DataTypes.ARRAY(Sequelize.STRING), allowNull: true },
   video_link: { type: DataTypes.ARRAY(Sequelize.STRING), allowNull: true },
-  description: { type: DataTypes.STRING(1000), allowNull: false },
+  description: { type: DataTypes.STRING(3000), allowNull: true },
   note: { type: DataTypes.FLOAT, allowNull: true },
 });
 
@@ -125,11 +136,14 @@ export const Manufacturer: any = sequelize.define("manufacturer", {
   country: { type: DataTypes.STRING, allowNull: false },
   img: { type: DataTypes.ARRAY(Sequelize.STRING), allowNull: true },
   doc: { type: DataTypes.ARRAY(Sequelize.STRING), allowNull: true },
-  description: { type: DataTypes.STRING(1000), allowNull: true },
+  description: { type: DataTypes.STRING(3000), allowNull: true },
 });
 
 User.hasOne(Token);
 Token.belongsTo(User);
+
+User.hasMany(Order);
+Order.belongsTo(User);
 
 User.hasOne(Basket);
 Basket.belongsTo(User);

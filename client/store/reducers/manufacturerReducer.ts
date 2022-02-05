@@ -7,6 +7,7 @@ import {
 
 const initialState: ManufacturerState = {
   manufacturers: [],
+  manufacturer: undefined,
   stateToFind: [],
 };
 
@@ -21,25 +22,30 @@ export const manufacturerReducer = (
         manufacturers: action.payload,
       };
     case ManufacturerActionsTypes.SET_INITIAL_STATE: {
-      let updatedCheckedState: IManufacturer[] = [...state.stateToFind];
+      let updatedCheckedState: number[] = [...state.stateToFind];
       if (state.stateToFind.length >= 6) {
-        !!state.stateToFind.find((elem) => elem.name === action.payload.name)
+        !!state.stateToFind.find((elem) => elem === action.payload.id)
           ? (updatedCheckedState = state.stateToFind.filter(
-              (elem) => elem.name !== action.payload.name
+              (elem) => elem !== action.payload.id
             ))
           : alert("Больше выбрать нельзя");
       } else {
-        !!state.stateToFind.find((elem) => elem.name === action.payload.name)
+        !!state.stateToFind.find((elem) => elem === action.payload.id)
           ? (updatedCheckedState = state.stateToFind.filter(
-              (elem) => elem.name !== action.payload.name
+              (elem) => elem !== action.payload.id
             ))
-          : updatedCheckedState.push(action.payload);
+          : updatedCheckedState.push(action.payload.id);
       }
       return {
         ...state,
         stateToFind: updatedCheckedState,
       };
     }
+    case ManufacturerActionsTypes.FETCH_MANUFACTURER_BY_ID:
+      return {
+        ...state,
+        manufacturer: action.payload,
+      };
     default:
       return state;
   }

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
+import Router from "next/router";
 import Link from "next/link";
 
 import styles from "./CatalogMenu.module.scss";
-import Router from "next/router";
 
 const CatalogMenu = () => {
   const [active, setActive] = useState("/catalog");
@@ -10,8 +10,6 @@ const CatalogMenu = () => {
   useEffect(() => {
     setActive(Router.asPath);
   }, []);
-
-  console.log(active);
 
   return (
     <div className={styles.menu}>

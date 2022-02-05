@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import { ProfileBlock } from "../../components";
+import { OrdersBlock, ProfileBlock } from "../../components";
 import withAuth from "../../utils/withAuth";
 
 const ProfilePage = () => {
@@ -12,6 +12,7 @@ const ProfilePage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <ProfileBlock />
+      <OrdersBlock />
     </>
   );
 };

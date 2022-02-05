@@ -1,27 +1,41 @@
 import React, { useEffect, useState } from "react";
 import Router from "next/router";
 import Link from "next/link";
+import { Popover } from "antd";
+
 import { useTypedSelector } from "hooks/useTypedSelector";
+import { useActions } from "hooks/useActions";
 
 import PhoneInput from "react-phone-input-2";
 import ru from "react-phone-input-2/lang/ru.json";
 import "react-phone-input-2/lib/style.css";
 
 import styles from "./Profile.module.scss";
-import { Popover } from "antd";
 
 const Profile = () => {
-  const routes = [
-    { index: 0, link: "profile/orders" },
-    { index: 1, link: "profile/drafts" },
-    { index: 2, link: "profile/favorites" },
-    { index: 3, link: "profile/notifications" },
-    { index: 4, link: "profile/comment" },
-    { index: 5, link: "profile/settings" },
-  ];
-  const [active, setActive] = useState("profile");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const { user } = useTypedSelector((state) => state.user);
+
+  const [active, setActive] = useState("profile");
+  const [disable, setDisable] = useState(true);
+  const [firstName, setFirstName] = useState("");
+  const [secondName, setSecondName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(
+    user?.phoneNumber ? user?.phoneNumber : ""
+  );
+
+  const { logout, editUser } = useActions();
+
+  const onLogOutClick = async () => {
+    logout();
+    await Router.push("/");
+  };
+
+  const onClick = () => {
+    setDisable(!disable);
+    if (!disable) {
+      editUser(firstName, secondName, phoneNumber);
+    }
+  };
 
   useEffect(() => {
     setActive(Router.asPath);
@@ -40,18 +54,44 @@ const Profile = () => {
         <div className={styles.header}>
           <div className={styles.mainInfo}>
             <div className={styles.left}>
-              <div>
+              <div className={styles.image}>
                 <img
                   src="/static/images/profile/user-profile.png"
                   alt="user-profile"
                 />
               </div>
-              <span>
-                {user?.firstName} {user?.secondName}
-              </span>
+              <div className={styles.initials}>
+                {disable ? (
+                  <span>{user?.firstName}</span>
+                ) : (
+                  <div>
+                    <input
+                      type="text"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      placeholder="Введите ваше имя"
+                    />
+                  </div>
+                )}{" "}
+                {disable ? (
+                  <span>{user?.secondName}</span>
+                ) : (
+                  <div>
+                    <input
+                      type="text"
+                      value={secondName}
+                      onChange={(e: any) => setSecondName(e.target.value)}
+                      placeholder="Введите вашу фамилию"
+                    />
+                  </div>
+                )}
+              </div>
             </div>
             <div className={styles.right}>
-              <button>
+              <button
+                className={disable ? "" : styles.editProfile}
+                onClick={onClick}
+              >
                 <img src="/static/images/profile/edit.png" alt="edit-icon" />
                 <span>Изменить</span>
               </button>
@@ -66,7 +106,7 @@ const Profile = () => {
                   </button>
                 </Link>
               )}
-              <button>
+              <button onClick={onLogOutClick}>
                 <img src="/static/images/profile/exit.png" alt="exit-icon" />
                 <span>Выйти</span>
               </button>
@@ -77,6 +117,7 @@ const Profile = () => {
               <div className={styles.phone}>
                 <span>Телефон:</span>
                 <PhoneInput
+                  disabled={disable}
                   localization={ru}
                   country={"by"}
                   onlyCountries={["by", "ru", "pl", "ua"]}
@@ -116,7 +157,7 @@ const Profile = () => {
               ) : (
                 <>
                   <Popover content={content}>
-                    <div>
+                    <div className={styles.idActivated}>
                       <span>Ваш аккаунт не активирован</span>
                       <img
                         src="/static/images/profile/cancel.png"

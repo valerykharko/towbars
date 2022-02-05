@@ -9,11 +9,13 @@ export interface IManufacturer {
 
 export interface ManufacturerState {
   manufacturers: Array<IManufacturer>;
-  stateToFind: Array<IManufacturer>;
+  manufacturer: IManufacturer | undefined;
+  stateToFind: Array<number>;
 }
 
 export enum ManufacturerActionsTypes {
   FETCH_MANUFACTURERS = "FETCH_MANUFACTURERS",
+  FETCH_MANUFACTURER_BY_ID = "FETCH_MANUFACTURER_BY_ID",
   SET_INITIAL_STATE = "SET_INITIAL_STATE",
 }
 
@@ -22,9 +24,17 @@ interface FetchManufacturers {
   payload: Array<IManufacturer>;
 }
 
+interface FetchManufacturerById {
+  type: ManufacturerActionsTypes.FETCH_MANUFACTURER_BY_ID;
+  payload: IManufacturer;
+}
+
 interface SetManufacturersToSearch {
   type: ManufacturerActionsTypes.SET_INITIAL_STATE;
   payload: IManufacturer;
 }
 
-export type ManufacturerAction = FetchManufacturers | SetManufacturersToSearch;
+export type ManufacturerAction =
+  | FetchManufacturers
+  | SetManufacturersToSearch
+  | FetchManufacturerById;

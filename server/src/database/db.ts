@@ -11,6 +11,7 @@ const sequelize = new Sequelize(
     dialect: "postgres",
     host: process.env.DB_HOST,
     port: 5432,
+    query: { raw: true },
   }
 );
 

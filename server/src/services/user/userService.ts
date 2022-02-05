@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { v4 } from "uuid";
-import { User } from "../../database/models/models";
+import { Basket, User } from "../../database/models/models";
 import tokenService from "../../services/user/tokenService";
 import mailService from "../../services/user/mailService";
 import ApiError from "../../errors/ApiError";
@@ -29,6 +29,7 @@ export default class UserService {
     const userDto = new UserDto(user); // id, email, isActivated
     const tokens = tokenService.generateTokens({ ...userDto });
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
+    const basket = await Basket.create({ userId: user.id });
 
     return {
       ...tokens,
@@ -41,8 +42,7 @@ export default class UserService {
     if (!user) {
       throw ApiError.BadRequest("Некорректная ссылка активации");
     }
-    user.isActivated = true;
-    await user.save();
+    await User.update({ isActivated: true }, { where: { id: user.id } });
   }
 
   static async login(email, password) {
@@ -92,5 +92,37 @@ export default class UserService {
 
   static async getAllUsers() {
     return await User.findAll();
+  }
+
+  static async editInfo(firstName, secondName, phoneNumber, id) {
+    let options = {};
+    firstName && secondName && phoneNumber
+      ? (options = {
+          firstName,
+          secondName,
+          phoneNumber,
+        })
+      : firstName && options
+      ? (options = {
+          firstName,
+          secondName,
+        })
+      : firstName
+      ? (options = {
+          firstName,
+        })
+      : secondName
+      ? (options = {
+          secondName,
+        })
+      : phoneNumber
+      ? (options = {
+          phoneNumber,
+        })
+      : "";
+
+    await User.update(options, { where: { id: id } });
+
+    return await User.findByPk(id);
   }
 }

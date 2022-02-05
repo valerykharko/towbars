@@ -1,4 +1,5 @@
 import { Auto } from "../../database/models/models";
+import autoService from "../../services/auto/autoService";
 import ApiError from "../../errors/ApiError";
 
 export default class AutoController {
@@ -17,11 +18,28 @@ export default class AutoController {
     return res.json(brands);
   }
 
-  static async getOne(req, res) {
-    const { id } = req.params;
-    const brand = await Auto.findOne({
-      where: { id },
-    });
-    return res.json(brand);
+  static async getOne(req, res, next) {
+    try {
+      const { brandId, modelId, generationId, bodyStyleId } = req.query;
+      const auto = await autoService.getOne(
+        brandId,
+        modelId,
+        generationId,
+        bodyStyleId
+      );
+      return res.json(auto);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async getById(req, res, next) {
+    try {
+      const { id } = req.params;
+      const auto = await autoService.getById(id);
+      return res.json(auto);
+    } catch (e) {
+      next(e);
+    }
   }
 }

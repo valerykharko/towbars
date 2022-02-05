@@ -1,9 +1,11 @@
 import path from "path";
 import { Towbar } from "../../database/models/models";
+import modelService from "../../services/catalog/towbarService";
 import ApiError from "../../errors/ApiError";
+import TowbarService from "../../services/catalog/towbarService";
 
-class TowbarController {
-  async create(req, res, next) {
+export default class TowbarController {
+  static async create(req, res, next) {
     try {
       const {
         brandF,
@@ -57,55 +59,40 @@ class TowbarController {
     }
   }
 
-  async getAll(req, res) {
-    let { brandId, modelId, generationId, bodyStyleId, limit, page } =
-      req.query;
-    page = page || 1;
-    limit = limit || 5;
-    let offset = page * limit - limit;
-    let farkops;
-    if (!brandId && !modelId && !generationId && !bodyStyleId) {
-      farkops = await Towbar.findAndCountAll({ limit, offset });
-    }
-    if (brandId && !modelId && !generationId && !bodyStyleId) {
-      farkops = await Towbar.findAndCountAll({
-        where: { brandId },
+  static async getAll(req, res, next) {
+    try {
+      const { carId, page = 1, limit = 8, options } = req.body;
+      const offset = page * limit - limit;
+      const towbars = await TowbarService.findAndCountAll(
+        carId,
         limit,
         offset,
-      });
+        options
+      );
+      return res.json(towbars);
+    } catch (e) {
+      next(e);
     }
-    if (brandId && modelId && !generationId && !bodyStyleId) {
-      farkops = await Towbar.findAndCountAll({
-        where: { brandId, modelId },
-        limit,
-        offset,
-      });
-    }
-    if (brandId && modelId && generationId && !bodyStyleId) {
-      farkops = await Towbar.findAndCountAll({
-        where: { brandId, modelId, generationId },
-        limit,
-        offset,
-      });
-    }
-    if (brandId && modelId && generationId && bodyStyleId) {
-      farkops = await Towbar.findAndCountAll({
-        where: { brandId, modelId, generationId, bodyStyleId },
-        limit,
-        offset,
-      });
-    }
-
-    return res.json(farkops);
   }
 
-  async getOne(req, res) {
-    const { id } = req.params;
-    const towbar = await Towbar.findOne({
-      where: { id },
-    });
-    return res.json(towbar);
+  static async getOne(req, res, next) {
+    try {
+      const { id } = req.params;
+      const towbar = await TowbarService.findOne(id);
+      return res.json(towbar);
+    } catch (e) {
+      next(e);
+    }
+  }
+
+  static async getByCode(req, res, next) {
+    try {
+      const { vendor_code } = req.query;
+      const towbars = await TowbarService.findAllByCode(vendor_code);
+      return res.json(towbars);
+    } catch (e) {
+      console.log(e);
+      next(e);
+    }
   }
 }
-
-export default new TowbarController();

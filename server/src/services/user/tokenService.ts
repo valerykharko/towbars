@@ -36,8 +36,12 @@ export default class TokenService {
       where: { userId },
     });
     if (tokenData) {
-      tokenData.refreshToken = refreshToken;
-      return tokenData.save();
+      return await Token.update(
+        { refreshToken: refreshToken },
+        {
+          where: { userId },
+        }
+      );
     }
     return await Token.create({ refreshToken, userId });
   }

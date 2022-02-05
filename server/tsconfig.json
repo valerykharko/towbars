@@ -7,5 +7,5 @@
     "esModuleInterop": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true
-  }
+  },
 }

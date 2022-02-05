@@ -6,13 +6,15 @@ import {
   AppstoreOutlined,
   MenuUnfoldOutlined,
   MenuFoldOutlined,
-  PieChartOutlined,
-  DesktopOutlined,
-  CarOutlined,
+  DatabaseFilled,
+  WechatFilled,
+  IdcardFilled,
+  FileTextFilled,
+  CarFilled,
+  PieChartFilled,
 } from "@ant-design/icons";
-import { WechatOutlined } from "@ant-design/icons/lib/icons";
 
-import styles from "./Menu.module.scss"
+import styles from "./Menu.module.scss";
 
 const MenuAdmin = () => {
   const [state, setState] = useState(false);
@@ -29,13 +31,33 @@ const MenuAdmin = () => {
         <Button
           type="primary"
           onClick={toggleCollapsed}
-          style={{ marginBottom: 16 }}
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: 30,
+            height: 30,
+            marginBottom: 5,
+            fontSize: "20px",
+          }}
         >
-          {React.createElement(state ? MenuUnfoldOutlined : MenuFoldOutlined)}
+          {state ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </Button>
         <Menu
           defaultSelectedKeys={[
-            router.asPath === "/admin-panel/online-chat" ? "3" : "1",
+            router.asPath === "/admin-panel/online-chat"
+              ? "3"
+              : router.asPath === "/admin-panel/catalog"
+              ? "2"
+              : router.asPath === "/admin-panel/db/users"
+              ? "4"
+              : router.asPath === "/admin-panel/db/autos"
+              ? "5"
+              : router.asPath === "/admin-panel/db/towbars"
+              ? "6"
+              : router.asPath === "/admin-panel/db/statistics"
+              ? "9"
+              : "1",
           ]}
           defaultOpenKeys={["sub1"]}
           mode="inline"
@@ -44,45 +66,71 @@ const MenuAdmin = () => {
         >
           <Menu.Item
             key="1"
-            icon={<PieChartOutlined />}
-            onClick={() => router.push("/admin-panel")}
+            icon={<FileTextFilled style={{ fontSize: "20px" }} />}
+            onClick={() => router.push("/admin-panel/orders")}
           >
-            Option 1
+            Управление заказами
           </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />}>
-            Option 2
+          <Menu.Item
+            key="2"
+            icon={<FileTextFilled style={{ fontSize: "20px" }} />}
+            onClick={() => router.push("/admin-panel/catalog")}
+          >
+            Управление каталогом
           </Menu.Item>
           <Menu.Item
             key="3"
-            icon={
-              <WechatOutlined style={{ fontSize: "24px", color: "#08c" }} />
-            }
+            icon={<WechatFilled style={{ fontSize: "22px" }} />}
             onClick={() => router.push("/admin-panel/online-chat")}
           >
-            Online chat
+            Мессенджер
           </Menu.Item>
-          <SubMenu key="sub1" title="Navigation One">
-            <Menu.Item key="5">Option 5</Menu.Item>
-            <Menu.Item key="6">Option 6</Menu.Item>
-            <Menu.Item key="7">Option 7</Menu.Item>
-            <Menu.Item key="8">Option 8</Menu.Item>
+          <SubMenu
+            key="sub1"
+            title="Управление сущностями"
+            icon={<DatabaseFilled style={{ fontSize: "20px" }} />}
+          >
+            <Menu.Item
+              icon={<IdcardFilled style={{ fontSize: "18px" }} />}
+              key="4"
+              onClick={() => router.push("/admin-panel/db/users")}
+            >
+              Пользователи
+            </Menu.Item>
+            <Menu.Item
+              icon={<CarFilled style={{ fontSize: "18px" }} />}
+              key="5"
+              onClick={() => router.push("/admin-panel/db/autos")}
+            >
+              Автомобили
+            </Menu.Item>
+            <Menu.Item
+              key="6"
+              onClick={() => router.push("/admin-panel/db/towbars")}
+            >
+              Фаркопы
+            </Menu.Item>
+            <Menu.Item key="7">Электрика</Menu.Item>
+            <Menu.Item key="8">Аксессуары</Menu.Item>
           </SubMenu>
           <SubMenu
             key="sub2"
-            icon={<AppstoreOutlined />}
-            title="Navigation Two"
+            icon={<AppstoreOutlined style={{ fontSize: "18px" }} />}
+            title="Статистика"
           >
-            <Menu.Item key="9">Option 9</Menu.Item>
-            <Menu.Item key="10">Option 10</Menu.Item>
             <SubMenu
               key="sub3"
-              title="Submenu"
-              icon={
-                <CarOutlined style={{ fontSize: "20px", color: "#a600c3" }} />
-              }
+              title="По заказам"
+              icon={<PieChartFilled style={{ fontSize: "20px" }} />}
             >
-              <Menu.Item key="11">Option 11</Menu.Item>
-              <Menu.Item key="12">Option 12</Menu.Item>
+              <Menu.Item
+                key="9"
+                onClick={() => router.push("/admin-panel/statistics")}
+              >
+                фаркопов
+              </Menu.Item>
+              <Menu.Item key="10">электрики</Menu.Item>
+              <Menu.Item key="11">аксессуаров</Menu.Item>
             </SubMenu>
           </SubMenu>
         </Menu>

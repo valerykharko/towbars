@@ -25,10 +25,39 @@ export function setBodyStyles(value: IBodyStyle[]): CarAction {
   return { type: CarActionsTypes.SET_BODY_STYLES, payload: value };
 }
 
+export function fetchCar(
+  brandId: number,
+  modelId: number,
+  generationId: number,
+  bodyStyleId: number
+) {
+  return async (dispatch: Dispatch<CarAction>) => {
+    const { data } = await CarService.getCar(
+      brandId,
+      modelId,
+      generationId,
+      bodyStyleId
+    );
+    dispatch({
+      type: CarActionsTypes.SET_CAR,
+      payload: data,
+    });
+  };
+}
+
+export function fetchCarById(carId: number) {
+  return async (dispatch: Dispatch<CarAction>) => {
+    const { data } = await CarService.getCarById(carId);
+    dispatch({
+      type: CarActionsTypes.SET_CAR,
+      payload: data,
+    });
+  };
+}
+
 export const fetchBrands = () => {
   return async (dispatch: Dispatch<CarAction>) => {
     const { data } = await CarService.getBrands();
-    console.log(data);
     dispatch(setBrands(data));
   };
 };

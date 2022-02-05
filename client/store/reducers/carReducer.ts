@@ -13,6 +13,7 @@ const initialState: CarState = {
   generationValue: undefined,
   bodyStyleActive: false,
   bodyStyleValue: undefined,
+  car: undefined,
 };
 
 export const carReducer = (
@@ -44,6 +45,8 @@ export const carReducer = (
       return { ...state, bodyStyleValue: action.payload };
     case CarActionsTypes.SET_BODY_STYLE_ACTIVE:
       return { ...state, bodyStyleActive: action.payload };
+    case CarActionsTypes.SET_CAR:
+      return { ...state, car: action.payload };
     default:
       return state;
   }

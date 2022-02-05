@@ -1,8 +1,3 @@
-export default interface ICar {
-  id: number;
-  brandId: number;
-}
-
 export interface IBrand {
   id: number;
   name: string;
@@ -24,6 +19,21 @@ export interface IBodyStyle {
   name: string;
 }
 
+export interface ICar {
+  id: number;
+  smart: string;
+  img: [string];
+  brandId: number;
+  modelId: number;
+  generationId: number;
+  bodyStyleId: number;
+  brand: string;
+  model: string;
+  generation: string;
+  year_of_issue: string;
+  bodyStyle: string;
+}
+
 export interface CarState {
   brands: Array<IBrand>;
   models: Array<IModel>;
@@ -37,6 +47,7 @@ export interface CarState {
   generationValue: IGeneration | undefined;
   bodyStyleActive: boolean;
   bodyStyleValue: IBodyStyle | undefined;
+  car: ICar | undefined;
 }
 
 export enum CarActionsTypes {
@@ -52,6 +63,7 @@ export enum CarActionsTypes {
   SET_GENERATION_ACTIVE = "SET_GENERATION_ACTIVE",
   SET_BODY_STYLE = "SET_BODY_STYLE",
   SET_BODY_STYLE_ACTIVE = "SET_BODY_STYLE_ACTIVE",
+  SET_CAR = "SET_CAR",
 }
 
 interface SetBrands {
@@ -108,6 +120,11 @@ interface SetBodyStyleActive {
   payload: boolean;
 }
 
+interface SetCar {
+  type: CarActionsTypes.SET_CAR;
+  payload: ICar;
+}
+
 export type CarAction =
   | SetBrands
   | SetModels
@@ -120,4 +137,5 @@ export type CarAction =
   | SetGeneration
   | SetGenerationActive
   | SetBodyStyle
-  | SetBodyStyleActive;
+  | SetBodyStyleActive
+  | SetCar;

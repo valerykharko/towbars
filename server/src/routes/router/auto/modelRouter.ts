@@ -1,6 +1,6 @@
 import express from "express";
-import checkRole from "../../../middlewares/checkRoleMiddleware";
 import modelController from "../../../controllers/auto/modelController";
+import checkRole from "../../../middlewares/checkRoleMiddleware";
 
 const router = express.Router();
 

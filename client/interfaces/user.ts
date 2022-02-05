@@ -3,6 +3,7 @@ export default interface IUser {
   firstName: string;
   secondName: string;
   email: string;
+  phoneNumber: string;
   isActivated: boolean;
   role: string;
 }
@@ -17,6 +18,7 @@ export enum UserActionsTypes {
   SET_USER = "SET_USER",
   SET_IS_AUTH = "SET_IS_AUTH",
   SET_IS_LOADING = "SET_IS_LOADING",
+  EDIT_USER = "EDIT_USER",
 }
 
 interface SetUser {
@@ -34,4 +36,9 @@ interface SetIsLoading {
   payload: boolean;
 }
 
-export type UserAction = SetUser | SetIsAuth | SetIsLoading;
+interface EditUser {
+  type: UserActionsTypes.EDIT_USER;
+  payload: {};
+}
+
+export type UserAction = SetUser | SetIsAuth | SetIsLoading | EditUser;

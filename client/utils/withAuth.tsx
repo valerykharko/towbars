@@ -11,7 +11,6 @@ const withAuth = (WrappedComponent: any) => {
 
       // If there is no access token we redirect to "/" page.
       if (!token) {
-        console.log("here");
         Router.replace("/");
         return null;
       }
