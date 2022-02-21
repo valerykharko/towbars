@@ -14,6 +14,7 @@ import FirstStep from "components/MakeOrder/FirstStep";
 import SecondStep from "components/MakeOrder/SecondStep";
 
 import styles from "./MakeOrder.module.scss";
+import Router from "next/router";
 
 const steps = [
   {
@@ -87,7 +88,7 @@ const MakeOrder = () => {
                       totalCount
                     );
                   }
-                  // Router.push("/");
+                  Router.push("/");
                 })
             }
           >

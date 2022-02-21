@@ -1,5 +1,5 @@
 import React from "react";
-import {notification} from "antd";
+import { notification } from "antd";
 
 import styles from "./index.module.scss";
 

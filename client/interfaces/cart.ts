@@ -1,7 +1,7 @@
 import { ITowbar } from "interfaces/towbar";
 
 export interface CartState {
-  items: any;
+  items: object[];
   totalPrice: number;
   totalCount: number;
 }

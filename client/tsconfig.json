@@ -24,7 +24,10 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules",
-    "./store/reducers/cartReducer.js"
+  "exclude": [
+    "node_modules",
+    "./store/reducers/cartReducer.js",
+    "./components/AdminPanel/Catalog/db",
+    "components/Cart/CartBlock.jsx"
   ]
 }

@@ -173,12 +173,14 @@ const TowbarPersonalBlock = () => {
                 <span>{manufacturer?.country}</span>
               </div>
             </div>
-            <div className={styles.manufacturerImage}>
-              <img
-                src={process.env.API_URL! + "/" + manufacturer?.img[0]}
-                alt=""
-              />
-            </div>
+            {manufacturer?.img && (
+              <div className={styles.manufacturerImage}>
+                <img
+                  src={process.env.API_URL! + "/" + manufacturer?.img[0]}
+                  alt=""
+                />
+              </div>
+            )}
           </div>
           <div className={styles.toInfo}>
             <span>Перейти к характеристикам</span>
