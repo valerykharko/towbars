@@ -17,7 +17,7 @@ import {
 import styles from "./Menu.module.scss";
 
 const MenuAdmin = () => {
-  const [state, setState] = useState(false);
+  const [state, setState] = useState(true);
 
   const toggleCollapsed = () => {
     setState(!state);
@@ -59,7 +59,6 @@ const MenuAdmin = () => {
               ? "9"
               : "1",
           ]}
-          defaultOpenKeys={["sub1"]}
           mode="inline"
           theme="light"
           inlineCollapsed={state}

@@ -35,34 +35,34 @@ server.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-export const rooms = new Map();
-
-io.on("connection", (socket) => {
-  socket.on("ROOM:JOIN", ({ roomId, userName }) => {
-    socket.join(roomId);
-    rooms.get(roomId).get("users").set(socket.id, userName);
-    const users = [...rooms.get(roomId).get("users").values()];
-    socket.in(roomId).emit("ROOM:SET_USERS", users);
-  });
-
-  socket.on("ROOM:NEW_MESSAGE", ({ roomId, userName, text }) => {
-    const obj = {
-      userName,
-      text,
-    };
-    rooms.get(roomId).get("messages").push(obj);
-    socket.in(roomId).emit("ROOM:NEW_MESSAGE", obj);
-  });
-
-  socket.on("disconnect", () => {
-    rooms.forEach((value, roomId) => {
-      if (value.get("users").delete(socket.id)) {
-        const users = [...value.get("users").values()];
-        socket.in(roomId).emit("ROOM:SET_USERS", users);
-      }
-    });
-  });
-});
+// export const rooms = new Map();
+//
+// io.on("connection", (socket) => {
+//   socket.on("ROOM:JOIN", ({ roomId, userName }) => {
+//     socket.join(roomId);
+//     rooms.get(roomId).get("users").set(socket.id, userName);
+//     const users = [...rooms.get(roomId).get("users").values()];
+//     socket.in(roomId).emit("ROOM:SET_USERS", users);
+//   });
+//
+//   socket.on("ROOM:NEW_MESSAGE", ({ roomId, userName, text }) => {
+//     const obj = {
+//       userName,
+//       text,
+//     };
+//     rooms.get(roomId).get("messages").push(obj);
+//     socket.in(roomId).emit("ROOM:NEW_MESSAGE", obj);
+//   });
+//
+//   socket.on("disconnect", () => {
+//     rooms.forEach((value, roomId) => {
+//       if (value.get("users").delete(socket.id)) {
+//         const users = [...value.get("users").values()];
+//         socket.in(roomId).emit("ROOM:SET_USERS", users);
+//       }
+//     });
+//   });
+// });
 
 const start = async () => {
   try {

@@ -26,7 +26,7 @@ const TowbarsBlock = () => {
                 </div>
                 <div className={styles.info}>
                   <div className={styles.rating}>
-                    <Rate allowHalf disabled defaultValue={3.5} />
+                    <Rate allowHalf disabled value={towbar.ratingValue} />
                   </div>
                   <div className={styles.vendorCode}>
                     <span>Артикул: </span>

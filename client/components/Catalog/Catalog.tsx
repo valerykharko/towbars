@@ -34,6 +34,7 @@ const Catalog = () => {
 
   const { page, limit, totalCount } = useTypedSelector((state) => state.towbar);
   const { stateToFind } = useTypedSelector((state) => state.manufacturer);
+  const { sortValue } = useTypedSelector((state) => state.sort);
 
   const { fetchCar, fetchTowbars } = useActions();
 
@@ -41,6 +42,7 @@ const Catalog = () => {
     price: value,
     manufacturers: stateToFind,
     isBumperCutOut: isBumperCutOut,
+    sortValue: sortValue,
   };
 
   useEffect(() => {
@@ -58,7 +60,7 @@ const Catalog = () => {
       );
     }
     fetchTowbars(car?.id!, page, limit, options);
-  }, [car?.id, page]);
+  }, [car?.id, page, sortValue]);
 
   return (
     <div className={styles.container}>

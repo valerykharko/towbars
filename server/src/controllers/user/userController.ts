@@ -132,4 +132,43 @@ export default class UserController {
       next(e);
     }
   }
+
+  static async updateUserAuto(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    try {
+      const { brand, model, generation, body_style } = req.body;
+      const token = req.headers.authorization.split(" ")[1];
+      const { id } = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+      const user = await userService.setAuto(
+        brand,
+        model,
+        generation,
+        body_style,
+        id
+      );
+      return res.json(user);
+    } catch (e) {
+      console.log(e);
+      next(e);
+    }
+  }
+
+  static async removeUserAuto(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    try {
+      const token = req.headers.authorization.split(" ")[1];
+      const { id } = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
+      const user = await userService.removeAuto(id);
+      return res.json(user);
+    } catch (e) {
+      console.log(e);
+      next(e);
+    }
+  }
 }

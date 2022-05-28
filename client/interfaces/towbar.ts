@@ -6,6 +6,7 @@ export interface ITowbar {
   ball_type: string;
   cutout: string;
   price: number;
+  ratingValue: number;
   removing_bumper: boolean;
   dismantling_amplifier: boolean;
   drilling: string;

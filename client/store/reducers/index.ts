@@ -6,6 +6,9 @@ import { sortReducer } from "./sortReducer";
 import { towbarReducer } from "./towbarReducer";
 import { cartReducer } from "store/reducers/cartReducer";
 import { orderReducer } from "store/reducers/orderReducer";
+import { favoriteReducer } from "store/reducers/favoriteReducer";
+import { ratingReducer } from "store/reducers/ratingReducer";
+import { statisticsReducer } from "store/reducers/statisticsReducer";
 
 export const store = combineReducers({
   car: carReducer,
@@ -15,6 +18,9 @@ export const store = combineReducers({
   towbar: towbarReducer,
   cart: cartReducer,
   order: orderReducer,
+  favorite: favoriteReducer,
+  rating: ratingReducer,
+  statistics: statisticsReducer,
 });
 
 export type RootState = ReturnType<typeof store>;

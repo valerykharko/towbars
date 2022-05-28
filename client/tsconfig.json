@@ -28,6 +28,8 @@
     "node_modules",
     "./store/reducers/cartReducer.js",
     "./components/AdminPanel/Catalog/db",
+    "./components/AdminPanel/Statistics/Charts/Charts.jsx",
+    "components/AdminPanel/Statistics/Charts/Charts.jsx",
     "components/Cart/CartBlock.jsx"
   ]
 }

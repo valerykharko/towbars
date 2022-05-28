@@ -1,8 +1,16 @@
 import bcrypt from "bcrypt";
 import { v4 } from "uuid";
-import { Basket, User } from "../../database/models/models";
+import {
+  Auto,
+  Basket,
+  BodyStyle,
+  Brand,
+  Generation,
+  Model,
+  User,
+} from "../../database/models/models";
 import tokenService from "../../services/user/tokenService";
-import mailService from "../../services/user/mailService";
+import mailService from "../../services/mail/mailService";
 import ApiError from "../../errors/ApiError";
 import UserDto from "../../dto/user/user-dto";
 
@@ -78,12 +86,33 @@ export default class UserService {
         throw ApiError.NotAuthorizedError();
       }
       const user = await User.findOne({ where: { id: userData.id } });
+
+      const auto = await Auto.findByPk(user.autoId);
+
+      const brandData = await Brand.findByPk(auto.brandId);
+      const modelData = await Model.findByPk(auto.modelId);
+      const generationData = await Generation.findByPk(auto.generationId);
+      const bodyStyleData = await BodyStyle.findByPk(auto.bodyStyleId);
+
+      const image = auto.img;
+
       const userDto = new UserDto(user);
+      const userInfo = {
+        ...userDto,
+        user_auto: {
+          brand: brandData.name,
+          model: modelData.name,
+          generation: generationData.name,
+          body_style: bodyStyleData.name,
+          img: image,
+        },
+      };
+
       const tokens = tokenService.generateTokens({ ...userDto });
       await tokenService.saveToken(userDto.id, tokens.refreshToken);
       return {
         ...tokens,
-        user: userDto,
+        user: userInfo,
       };
     } catch (e) {
       console.log(e);
@@ -122,6 +151,56 @@ export default class UserService {
       : "";
 
     await User.update(options, { where: { id: id } });
+
+    return await User.findByPk(id);
+  }
+
+  static async setAuto(brand, model, generation, body_style, id) {
+    const brandData = await Brand.findOne({
+      where: { name: brand },
+    });
+
+    const modelData = await Model.findOne({
+      where: { name: model },
+    });
+
+    const generationData = await Generation.findOne({
+      where: { name: generation },
+    });
+
+    const body_styleData = await BodyStyle.findOne({
+      where: { name: body_style },
+    });
+
+    const auto = await Auto.findOne({
+      where: {
+        brandId: brandData.id,
+        modelId: modelData.id,
+        generationId: generationData.id,
+        bodyStyleId: body_styleData.id,
+      },
+    });
+
+    await User.update({ autoId: Number(auto.id) }, { where: { id: id } });
+
+    const user = await User.findByPk(id);
+
+    const image = auto.img;
+
+    return {
+      ...user,
+      user_auto: {
+        brand,
+        model,
+        generation,
+        body_style,
+        img: image,
+      },
+    };
+  }
+
+  static async removeAuto(id) {
+    await User.update({ autoId: null }, { where: { id: id } });
 
     return await User.findByPk(id);
   }

@@ -14,6 +14,8 @@ router.post("/login", userController.login);
 router.post("/logout", userController.logout);
 router.get("/activate/:link", userController.activate);
 router.get("/refresh", userController.refresh);
+router.patch("/user/auto/remove", userController.removeUserAuto);
+router.patch("/user/auto", userController.updateUserAuto);
 router.patch("/user", userController.editUser);
 
 export default router;

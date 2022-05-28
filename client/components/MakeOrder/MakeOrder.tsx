@@ -73,7 +73,7 @@ const MakeOrder = () => {
                 .loading("Оплата заказ в процессе...", 2.5)
                 .then(() => message.success("Оплата заказа завершена", 2.5))
                 .then(() => message.info("Ваш заказ оплачен", 1.5))
-                .then(() => {
+                .then(async () => {
                   if (
                     user?.firstName &&
                     user?.secondName &&
@@ -88,7 +88,7 @@ const MakeOrder = () => {
                       totalCount
                     );
                   }
-                  Router.push("/");
+                  await Router.push("/");
                 })
             }
           >
