@@ -294,8 +294,9 @@ const TableAdmin = () => {
         })
       ) {
         item.price_ah =
-          Math.round(String(elemToChange.price).replace(/,/g, "") * valueRUB) +
-          " BYN";
+          Math.round(
+            Number(String(elemToChange.price).replace(/,/g, "")) * valueRUB
+          ) + " BYN";
       }
     });
 
@@ -568,17 +569,17 @@ const TableAdmin = () => {
     //   ? dataSource.filter((elem) => elem.price_xb === null)
     //   : dataSource.filter((elem) => elem.price_ah === null);
 
-    const newDataSource = dataSource
-      .filter((elem) => elem.price_st === null)
-      .filter((elem) => elem.price_ah === null)
-      .filter((elem) => elem.price_cap === null)
-      .filter((elem) => elem.price_ov === null)
-      .filter((elem) => elem.price_rr === null)
-      .filter((elem) => elem.price_cb === null)
-      .filter((elem) => elem.price_xb === null)
-      .filter((elem) => elem.price_gr === null)
-      .filter((elem) => elem.price_pl === null);
-    console.log(newDataSource);
+    // const newDataSource = dataSource
+    //   .filter((elem) => elem.price_st === null)
+    //   .filter((elem) => elem.price_ah === null)
+    //   .filter((elem) => elem.price_cap === null)
+    //   .filter((elem) => elem.price_ov === null)
+    //   .filter((elem) => elem.price_rr === null)
+    //   .filter((elem) => elem.price_cb === null)
+    //   .filter((elem) => elem.price_xb === null)
+    //   .filter((elem) => elem.price_gr === null)
+    //   .filter((elem) => elem.price_pl === null);
+    // console.log(newDataSource);
     setData(dataSource);
     return dataSource;
   }, [valuePlN, valueRUB]);

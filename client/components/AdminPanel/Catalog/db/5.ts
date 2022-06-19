@@ -1,4 +1,5 @@
 export const json5 = {
+  // @ts-ignore
   Capital: [
     {
       manufacturer: "Steinhof",

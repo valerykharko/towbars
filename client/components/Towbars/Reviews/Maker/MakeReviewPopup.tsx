@@ -52,7 +52,7 @@ const MakeReviewPopup = ({ towbar }: MakeReviewPopupProps) => {
 
   return (
     <div className={styles.maker}>
-      <button onClick={showModal} disabled={isUserRating.isUserRating}>
+      <button onClick={showModal} disabled={isUserRating?.isUserRating}>
         <span>Оставить отзыв</span>
       </button>
       <Modal

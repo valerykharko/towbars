@@ -1,11 +1,11 @@
-export const getDate = (day, year) =>
+export const getDate = (day: any, year: any) =>
   new Date(year, 0, day).toLocaleString("ru-RU", {
     day: "numeric",
     month: "long",
     weekday: "short",
   });
 
-function dateRange(startDate, endDate) {
+function dateRange(startDate: any, endDate: any) {
   const start = startDate.toISOString().split("T")[0].split("-");
   const end = endDate.toISOString().split("T")[0].split("-");
   const startYear = parseInt(start[0]);
@@ -24,7 +24,7 @@ function dateRange(startDate, endDate) {
   return dates;
 }
 
-export const getArrayOfDates = (startDate, endDate, dataOfReport) => {
+export const getArrayOfDates = (startDate: any, endDate: any, dataOfReport: any) => {
   const oneDay = 24 * 3600 * 1000;
   const arrayOfDays = [];
   const arrayOfHours = [
@@ -33,9 +33,14 @@ export const getArrayOfDates = (startDate, endDate, dataOfReport) => {
   ];
   const newReport = dataOfReport;
 
-  for (let ms = startDate * 1, last = endDate * 1; ms <= last; ms += oneDay) {
-    const startOfYear = new Date(startDate.getFullYear(), 0, 0);
-    const diff = new Date(ms) - startOfYear;
+  for (
+    let ms: any = startDate * 1, last = endDate * 1;
+    ms <= last;
+    ms += oneDay
+  ) {
+    const startOfYear: any = new Date(startDate.getFullYear(), 0, 0);
+    // @ts-ignore
+    const diff: any = new Date(ms) - startOfYear;
     const dayOf = Math.floor(diff / oneDay);
     arrayOfDays.push(dayOf);
   }
@@ -71,7 +76,7 @@ export const getArrayOfDates = (startDate, endDate, dataOfReport) => {
       })
     );
     newReport.sort(
-      (prev, next) => prev.date_of_use.hour - next.date_of_use.hour
+      (prev: any, next: any) => prev.date_of_use.hour - next.date_of_use.hour
     );
   } else if (delta <= 31) {
     for (let i = 0; i < dataOfReport.length; i++) {
@@ -90,7 +95,7 @@ export const getArrayOfDates = (startDate, endDate, dataOfReport) => {
         },
       })
     );
-    newReport.sort((prev, next) => prev.date_of_use.day - next.date_of_use.day);
+    newReport.sort((prev: any, next: any) => prev.date_of_use.day - next.date_of_use.day);
   } else if (delta > 31) {
     for (let i = 0; i < dataOfReport.length; i++) {
       arrayOfMonths.map((item, index) => {
@@ -116,7 +121,7 @@ export const getArrayOfDates = (startDate, endDate, dataOfReport) => {
       })
     );
     newReport.sort(
-      (prev, next) => prev.date_of_use.month - next.date_of_use.month
+      (prev: any, next: any) => prev.date_of_use.month - next.date_of_use.month
     );
   }
 

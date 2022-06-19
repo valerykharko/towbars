@@ -60,7 +60,7 @@ export default class TowbarController {
 
   static async getAll(req, res, next) {
     try {
-      const { carId, page = 1, limit = 8, options } = req.body;
+      const { carId, page = 1, limit = 4, options } = req.body;
       const offset = page * limit - limit;
       const towbars = await TowbarService.findAndCountAll(
         carId,

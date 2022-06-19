@@ -11,8 +11,8 @@ const FavoritesBlock = () => {
     <div className={styles.wrapper}>
       {favorites &&
         favorites.map((item) => (
-          <Link href={`/catalog/towbars/${item.towbar.id}`}>
-            <div key={item.id} className={styles.item}>
+          <Link key={item.id} href={`/catalog/towbars/${item.towbar.id}`}>
+            <div className={styles.item}>
               <div className={styles.image}>
                 <img
                   src={process.env.API_URL! + "/" + item.towbar.img[0]}

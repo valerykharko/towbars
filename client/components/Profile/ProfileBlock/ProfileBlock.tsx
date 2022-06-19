@@ -61,18 +61,6 @@ const ProfileBlock = () => {
             </div>
             <div className={styles.initials}>
               {disable ? (
-                <span>{user?.firstName}</span>
-              ) : (
-                <div>
-                  <input
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="Введите ваше имя"
-                  />
-                </div>
-              )}{" "}
-              {disable ? (
                 <span>{user?.secondName}</span>
               ) : (
                 <div>
@@ -81,6 +69,19 @@ const ProfileBlock = () => {
                     value={secondName}
                     onChange={(e: any) => setSecondName(e.target.value)}
                     placeholder="Введите вашу фамилию"
+                  />
+                </div>
+              )}
+              {"  "}
+              {disable ? (
+                <span>{user?.firstName}</span>
+              ) : (
+                <div>
+                  <input
+                    type="text"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="Введите ваше имя"
                   />
                 </div>
               )}

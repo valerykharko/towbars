@@ -4,6 +4,7 @@ import { userReducer } from "./userReducer";
 import { manufacturerReducer } from "./manufacturerReducer";
 import { sortReducer } from "./sortReducer";
 import { towbarReducer } from "./towbarReducer";
+import { wiringKitReducer } from "./wiringKitReducer";
 import { cartReducer } from "store/reducers/cartReducer";
 import { orderReducer } from "store/reducers/orderReducer";
 import { favoriteReducer } from "store/reducers/favoriteReducer";
@@ -16,6 +17,7 @@ export const store = combineReducers({
   manufacturer: manufacturerReducer,
   sort: sortReducer,
   towbar: towbarReducer,
+  wiringKit: wiringKitReducer,
   cart: cartReducer,
   order: orderReducer,
   favorite: favoriteReducer,

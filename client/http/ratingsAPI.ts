@@ -1,5 +1,10 @@
 import { AxiosResponse } from "axios";
-import { IIsUserRating, IRating, ITowbarRating } from "interfaces/rating";
+import {
+  IIsUserRating,
+  IRating,
+  ITowbarRating,
+  IUserRating, IUserRatingData,
+} from "interfaces/rating";
 import $api from "./index";
 
 export default class RatingsService {
@@ -24,8 +29,8 @@ export default class RatingsService {
   static async getRatingsByUser(
     page: number,
     limit = 1
-  ): Promise<AxiosResponse<IRating[]>> {
-    return $api.post<IRating[]>("/ratings/byUser", {
+  ): Promise<AxiosResponse<IUserRatingData>> {
+    return $api.post<IUserRatingData>("/ratings/byUser", {
       page,
       limit,
     });

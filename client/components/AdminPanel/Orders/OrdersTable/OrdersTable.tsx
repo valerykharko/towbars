@@ -2,7 +2,6 @@ import React from "react";
 import { Button, Table } from "antd";
 import { useTypedSelector } from "hooks/useTypedSelector";
 import { useActions } from "hooks/useActions";
-import { ITowbar } from "interfaces/towbar";
 
 import styles from "./OrdersTable.module.scss";
 

@@ -1,5 +1,14 @@
 import sequelize, { Op } from "sequelize";
-import { Rating, Towbar } from "../../database/models/models";
+import {
+  Auto,
+  BodyStyle,
+  Brand,
+  Generation,
+  Manufacturer,
+  Model,
+  Rating,
+  Towbar,
+} from "../../database/models/models";
 
 export default class TowbarService {
   static async findAndCountAll(carId, limit, offset, options) {
@@ -84,9 +93,29 @@ export default class TowbarService {
           const ratingData = await Rating.findOne({
             where: { towbarId: elem.id },
           });
+
+          const autoData = await Auto.findByPk(elem.autoId);
+          const brandData = await Brand.findByPk(autoData.brandId);
+          const modelData = await Model.findByPk(autoData.modelId);
+          const generationData = await Generation.findByPk(
+            autoData.generationId
+          );
+          const bodyStyleData = await BodyStyle.findByPk(autoData.bodyStyleId);
+
+          const manufacturerData = await Manufacturer.findByPk(
+            elem.manufacturerId
+          );
+
           return {
             ...elem,
             ratingValue: ratingData.rating,
+            manufacturer: manufacturerData,
+            auto: {
+              brand: brandData,
+              model: modelData,
+              generation: generationData,
+              bodyStyle: bodyStyleData,
+            },
           };
         })
       );
@@ -105,9 +134,27 @@ export default class TowbarService {
   }
 
   static async findOne(towbarId) {
-    return await Towbar.findOne({
+    const towbar = await Towbar.findOne({
       where: { id: towbarId },
     });
+    const autoData = await Auto.findByPk(towbar.autoId);
+    const brandData = await Brand.findByPk(autoData.brandId);
+    const modelData = await Model.findByPk(autoData.modelId);
+    const generationData = await Generation.findByPk(autoData.generationId);
+    const bodyStyleData = await BodyStyle.findByPk(autoData.bodyStyleId);
+
+    const manufacturerData = await Manufacturer.findByPk(towbar.manufacturerId);
+
+    return {
+      ...towbar,
+      manufacturer: manufacturerData,
+      auto: {
+        brand: brandData,
+        model: modelData,
+        generation: generationData,
+        bodyStyle: bodyStyleData,
+      },
+    };
   }
 
   static async findAllByCode(vendor_code) {

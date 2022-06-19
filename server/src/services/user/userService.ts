@@ -7,6 +7,7 @@ import {
   Brand,
   Generation,
   Model,
+  Token,
   User,
 } from "../../database/models/models";
 import tokenService from "../../services/user/tokenService";
@@ -65,6 +66,34 @@ export default class UserService {
     const userDto = new UserDto(user);
     const tokens = tokenService.generateTokens({ ...userDto });
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+    if (user.autoId) {
+      const auto = await Auto.findByPk(user.autoId);
+
+      const brandData = await Brand.findByPk(auto.brandId);
+      const modelData = await Model.findByPk(auto.modelId);
+      const generationData = await Generation.findByPk(auto.generationId);
+      const bodyStyleData = await BodyStyle.findByPk(auto.bodyStyleId);
+
+      const image = auto.img;
+
+      const userInfo = {
+        ...userDto,
+        user_auto: {
+          brand: brandData.name,
+          model: modelData.name,
+          generation: generationData.name,
+          body_style: bodyStyleData.name,
+          img: image,
+        },
+      };
+
+      return {
+        ...tokens,
+        user: userInfo,
+      };
+    }
+
     return {
       ...tokens,
       user: userDto,
@@ -87,32 +116,40 @@ export default class UserService {
       }
       const user = await User.findOne({ where: { id: userData.id } });
 
-      const auto = await Auto.findByPk(user.autoId);
-
-      const brandData = await Brand.findByPk(auto.brandId);
-      const modelData = await Model.findByPk(auto.modelId);
-      const generationData = await Generation.findByPk(auto.generationId);
-      const bodyStyleData = await BodyStyle.findByPk(auto.bodyStyleId);
-
-      const image = auto.img;
-
       const userDto = new UserDto(user);
-      const userInfo = {
-        ...userDto,
-        user_auto: {
-          brand: brandData.name,
-          model: modelData.name,
-          generation: generationData.name,
-          body_style: bodyStyleData.name,
-          img: image,
-        },
-      };
 
       const tokens = tokenService.generateTokens({ ...userDto });
       await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+      if (user.autoId) {
+        const auto = await Auto.findByPk(user.autoId);
+
+        const brandData = await Brand.findByPk(auto.brandId);
+        const modelData = await Model.findByPk(auto.modelId);
+        const generationData = await Generation.findByPk(auto.generationId);
+        const bodyStyleData = await BodyStyle.findByPk(auto.bodyStyleId);
+
+        const image = auto.img;
+
+        const userInfo = {
+          ...userDto,
+          user_auto: {
+            brand: brandData.name,
+            model: modelData.name,
+            generation: generationData.name,
+            body_style: bodyStyleData.name,
+            img: image,
+          },
+        };
+        return {
+          ...tokens,
+          user: userInfo,
+        };
+      }
+
       return {
         ...tokens,
-        user: userInfo,
+        user: userDto,
       };
     } catch (e) {
       console.log(e);
@@ -121,6 +158,17 @@ export default class UserService {
 
   static async getAllUsers() {
     return await User.findAll();
+  }
+
+  static async isValidRefreshToken(id, refreshToken) {
+    const data = await Token.findOne({ where: { userId: id } });
+    return data.refreshToken === refreshToken;
+  }
+
+  static async isAdminToken(id, refreshToken) {
+    const data = await Token.findOne({ where: { userId: id } });
+    const user = await User.findByPk(id);
+    return data.refreshToken === refreshToken && user.role === "ADMIN";
   }
 
   static async editInfo(firstName, secondName, phoneNumber, id) {
@@ -152,7 +200,27 @@ export default class UserService {
 
     await User.update(options, { where: { id: id } });
 
-    return await User.findByPk(id);
+    const user = await User.findByPk(id);
+
+    const auto = await Auto.findByPk(user.autoId);
+
+    const brandData = await Brand.findByPk(auto.brandId);
+    const modelData = await Model.findByPk(auto.modelId);
+    const generationData = await Generation.findByPk(auto.generationId);
+    const bodyStyleData = await BodyStyle.findByPk(auto.bodyStyleId);
+
+    const image = auto.img;
+
+    return {
+      ...user,
+      user_auto: {
+        brand: brandData.name,
+        model: modelData.name,
+        generation: generationData.name,
+        body_style: bodyStyleData.name,
+        img: image,
+      },
+    };
   }
 
   static async setAuto(brand, model, generation, body_style, id) {

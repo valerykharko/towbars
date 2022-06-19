@@ -1,6 +1,9 @@
 import { Dispatch } from "redux";
 import RatingsService from "http/ratingsAPI";
-import { RatingAction, RatingActionsTypes } from "interfaces/rating";
+import {
+  RatingAction,
+  RatingActionsTypes,
+} from "interfaces/rating";
 
 export function setCurrentPageOfRatingsT(value: number): RatingAction {
   return {

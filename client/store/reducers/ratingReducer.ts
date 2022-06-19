@@ -7,7 +7,7 @@ import {
 const initialState: RatingState = {
   ratings_by_towbar: [],
   ratings_by_user: [],
-  isUserRating: {},
+  isUserRating: null,
   rating: 0,
   pageT: 1,
   limitT: 3,
@@ -57,24 +57,24 @@ export const ratingReducer = (
         ...state,
         ratings_by_user: action.payload,
       };
-    case RatingActionsTypes.ADD_RATING:
-      return {
-        ...state,
-        ratings_by_towbar: action.payload,
-        ratings_by_user: action.payload,
-      };
-    case RatingActionsTypes.EDIT_RATING:
-      return {
-        ...state,
-        ratings_by_towbar: action.payload,
-        ratings_by_user: action.payload,
-      };
-    case RatingActionsTypes.REMOVE_RATING:
-      return {
-        ...state,
-        ratings_by_towbar: action.payload,
-        ratings_by_user: action.payload,
-      };
+    // case RatingActionsTypes.ADD_RATING:
+    //   return {
+    //     ...state,
+    //     ratings_by_towbar: action.payload,
+    //     ratings_by_user: action.payload,
+    //   };
+    // case RatingActionsTypes.EDIT_RATING:
+    //   return {
+    //     ...state,
+    //     ratings_by_towbar: action.payload,
+    //     ratings_by_user: action.payload,
+    //   };
+    // case RatingActionsTypes.REMOVE_RATING:
+    //   return {
+    //     ...state,
+    //     ratings_by_towbar: action.payload,
+    //     ratings_by_user: action.payload,
+    //   };
     default:
       return state;
   }

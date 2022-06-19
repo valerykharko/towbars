@@ -1,23 +1,18 @@
-import React, { useEffect } from "react";
+import React, { RefObject } from "react";
 import { Tooltip } from "antd";
-import { useTypedSelector } from "hooks/useTypedSelector";
-import { useActions } from "hooks/useActions";
 import { ITowbar } from "interfaces/towbar";
 
 import styles from "./TowbarManufacturer.module.scss";
 
 interface TowbarTitleProps {
   towbar: ITowbar;
+  paramsRef: RefObject<HTMLDivElement>;
 }
 
-const TowbarManufacturer = ({ towbar }: TowbarTitleProps) => {
-  const { manufacturer } = useTypedSelector((state) => state.manufacturer);
-
-  const { fetchManufacturerById } = useActions();
-
-  useEffect(() => {
-    towbar?.manufacturerId && fetchManufacturerById(towbar?.manufacturerId);
-  }, []);
+const TowbarManufacturer = ({ towbar, paramsRef }: TowbarTitleProps) => {
+  const scrollToParams = () => {
+    window.scrollTo(0, paramsRef.current!.offsetTop - 10);
+  };
 
   return (
     <div className={styles.info}>
@@ -32,20 +27,20 @@ const TowbarManufacturer = ({ towbar }: TowbarTitleProps) => {
             <span>Страна производства: </span>
           </div>
           <div>
-            <span>{manufacturer?.name}</span>
-            <span>{manufacturer?.country}</span>
+            <span>{towbar?.manufacturer?.name}</span>
+            <span>{towbar?.manufacturer?.country}</span>
           </div>
         </div>
-        {manufacturer?.img && (
+        {towbar?.manufacturer?.img && (
           <div className={styles.manufacturerImage}>
             <img
-              src={process.env.API_URL! + "/" + manufacturer?.img[0]}
+              src={process.env.API_URL! + "/" + towbar?.manufacturer?.img[0]}
               alt=""
             />
           </div>
         )}
       </div>
-      <div className={styles.toInfo}>
+      <div className={styles.toInfo} onClick={scrollToParams}>
         <span>Перейти к характеристикам</span>
       </div>
       <div className={styles.pdf}>
@@ -60,10 +55,10 @@ const TowbarManufacturer = ({ towbar }: TowbarTitleProps) => {
             </a>
           </Tooltip>
         )}
-        {manufacturer?.doc && (
+        {towbar?.manufacturer?.doc && (
           <Tooltip title="Сертификат производителя">
             <a
-              href={process.env.API_URL! + "/" + manufacturer?.doc[0]}
+              href={process.env.API_URL! + "/" + towbar?.manufacturer?.doc[0]}
               target="_blank"
               rel="noreferrer"
             >

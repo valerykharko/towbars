@@ -45,6 +45,9 @@ export { default as TowbarTitle } from "./Towbars/Title/TowbarTitle";
 export { default as TowbarManufacturer } from "./Towbars/Manufacturer/TowbarManufacturer";
 export { default as TowbarFavorites } from "./Towbars/Favorites/TowbarFavorites";
 
+export { default as WiringKitsBlock } from "./WiringKits/WiringKitsBlock";
+export { default as WiringKitPages } from "./WiringKits/Pages/WiringKitPages";
+
 export { default as MakeReviewPopup } from "./Towbars/Reviews/Maker/MakeReviewPopup";
 export { default as TowbarsReviews } from "./Towbars/Reviews/TowbarsReviews";
 export { default as ReviewsPages } from "./Towbars/Reviews/Pages/ReviewsPages";

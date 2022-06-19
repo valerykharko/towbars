@@ -1,6 +1,4 @@
-import React, { useEffect } from "react";
-import { useTypedSelector } from "hooks/useTypedSelector";
-import { useActions } from "hooks/useActions";
+import React from "react";
 import { ITowbar } from "interfaces/towbar";
 
 import styles from "./TowbarTitle.module.scss";
@@ -10,19 +8,12 @@ interface TowbarTitleProps {
 }
 
 const TowbarTitle = ({ towbar }: TowbarTitleProps) => {
-  const { car } = useTypedSelector((state) => state.car);
-
-  const { fetchCarById } = useActions();
-
-  useEffect(() => {
-    towbar?.autoId && fetchCarById(towbar?.autoId);
-  }, []);
-
   return (
     <div className={styles.title}>
       <h1>
-        Фаркоп на {car?.brand} {car?.model} {car?.generation}{" "}
-        {car?.year_of_issue} {car?.bodyStyle}
+        Фаркоп на {towbar.auto?.brand?.name} {towbar.auto?.model?.name}{" "}
+        {towbar.auto?.generation?.name} {towbar.auto?.generation?.year_of_issue}{" "}
+        {towbar.auto?.bodyStyle?.name}
       </h1>
     </div>
   );

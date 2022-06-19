@@ -51,4 +51,8 @@ export default class AuthService {
   static async removeUserAuto(): Promise<AxiosResponse<IUser>> {
     return $api.patch<IUser>("/auth/user/auto/remove");
   }
+
+  static async checkRefreshToken(): Promise<AxiosResponse<any>> {
+    return $api.get<any>("/auth/isValid");
+  }
 }

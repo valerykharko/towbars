@@ -3,7 +3,7 @@ import transporter from "../../modules/notification/transporter";
 export default class MailService {
   static async sendActivationMail(to, link) {
     await transporter.sendMail({
-      from: process.env.SMTP_USER,
+      from: "towbar.by@yandex.by",
       to,
       subject: "Активация аккаунта на " + process.env.API_URL,
       text: "",
@@ -18,8 +18,8 @@ export default class MailService {
 
   static async sendCallRequest(phoneNumber) {
     await transporter.sendMail({
-      from: process.env.SMTP_USER,
-      to: "towbars.by@gmail.com",
+      from: "towbar.by@yandex.by",
+      to: "towbar.by@yandex.by",
       subject: "Запрос на обратный звонок",
       text: "",
       html: `

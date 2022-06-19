@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { MutableRefObject, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import Carousel from "react-multi-carousel";
 import { Collapse, Rate, Table } from "antd";
@@ -42,7 +42,6 @@ const TowbarPersonalBlock = () => {
 
   const { towbar } = useTypedSelector((state) => state.towbar);
   const { car } = useTypedSelector((state) => state.car);
-  const { manufacturer } = useTypedSelector((state) => state.manufacturer);
   const { rating, totalCountT } = useTypedSelector((state) => state.rating);
 
   const { fetchTowbarById, addItemToCart } = useActions();
@@ -50,6 +49,9 @@ const TowbarPersonalBlock = () => {
   useEffect(() => {
     Number(router.query.id) && fetchTowbarById(Number(router.query.id));
   }, [router.query]);
+
+  const paramsBlock = useRef<HTMLDivElement>(null);
+  const reviewsBlock = useRef<HTMLDivElement>(null);
 
   const columns = [
     {
@@ -98,6 +100,10 @@ const TowbarPersonalBlock = () => {
     );
   }
 
+  const scrollToReviews = () => {
+    window.scrollTo(0, reviewsBlock.current!.offsetTop - 10);
+  };
+
   return (
     towbar && (
       <div className={styles.container}>
@@ -106,7 +112,7 @@ const TowbarPersonalBlock = () => {
         </div>
         <TowbarTitle towbar={towbar} />
         <div className={styles.panel}>
-          <div className={styles.rate}>
+          <div className={styles.rate} onClick={scrollToReviews}>
             <Rate value={rating} disabled={true} />
             <span className={styles.rate__value}>{totalCountT} отзывов</span>
           </div>
@@ -158,7 +164,7 @@ const TowbarPersonalBlock = () => {
               </div>
             </Carousel>
           </div>
-          <TowbarManufacturer towbar={towbar} />
+          <TowbarManufacturer towbar={towbar} paramsRef={paramsBlock} />
           <div className={styles.rightBlock}>
             <div className={styles.price}>
               <div className={styles.discount}>
@@ -209,7 +215,7 @@ const TowbarPersonalBlock = () => {
             </div>
           </div>
         </div>
-        <div className={styles.afterMain}>
+        <div className={styles.afterMain} ref={paramsBlock}>
           <div className={styles.table}>
             <h2>Технические характеристики</h2>
             <Table
@@ -227,7 +233,7 @@ const TowbarPersonalBlock = () => {
                 key="1"
                 style={{ fontSize: 18 }}
               >
-                <p>{manufacturer?.description}</p>
+                <p>{towbar?.manufacturer?.description}</p>
               </Panel>
               <Panel
                 header="Информация о товаре"
@@ -238,7 +244,7 @@ const TowbarPersonalBlock = () => {
               </Panel>
             </Collapse>
           </div>
-          <div className={styles.reviews}>
+          <div className={styles.reviews} ref={reviewsBlock}>
             <h2>Отзывы о товаре</h2>
             <TowbarsReviews towbar={towbar} />
           </div>

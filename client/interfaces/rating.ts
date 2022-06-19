@@ -1,5 +1,6 @@
 import { ITowbar } from "interfaces/towbar";
 import IUser from "interfaces/user";
+import { IManufacturer } from "interfaces/manufacturer";
 
 export interface IRating {
   id: number;
@@ -15,6 +16,25 @@ export interface IRating {
   user: IUser;
 }
 
+export interface IUserRating {
+  id: number;
+  title: string;
+  text: string;
+  value: string;
+  img: [string];
+  date: string;
+  userId: number;
+  ratingId: number;
+  rating: number;
+  towbar: ITowbar;
+  manufacturer: IManufacturer;
+}
+
+export interface IUserRatingData {
+  rows: [IUserRating];
+  count: number;
+}
+
 export interface ITowbarRating {
   rows: [IRating];
   rating: number;
@@ -28,9 +48,9 @@ export interface IIsUserRating {
 
 export interface RatingState {
   ratings_by_towbar: Array<IRating>;
-  ratings_by_user: Array<IRating>;
+  ratings_by_user: Array<IUserRating>;
   rating: number;
-  isUserRating: IIsUserRating | {};
+  isUserRating: IIsUserRating | null;
   pageT: number;
   limitT: number;
   totalCountT: number;
@@ -90,7 +110,7 @@ interface FetchRatingsByTowbar {
 
 interface FetchRatingsByUser {
   type: RatingActionsTypes.FETCH_RATINGS_BY_USER;
-  payload: Array<IRating>;
+  payload: Array<IUserRating>;
 }
 
 interface AddRating {

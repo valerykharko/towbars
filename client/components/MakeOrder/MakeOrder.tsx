@@ -18,17 +18,17 @@ import Router from "next/router";
 
 const steps = [
   {
-    title: "Verification",
+    title: "Верификация",
     content: <FirstStep />,
     icon: <SolutionOutlined />,
   },
   {
-    title: "Pay",
+    title: "Оплата",
     content: <SecondStep />,
     icon: <LoadingOutlined />,
   },
   {
-    title: "Done",
+    title: "Готово",
     content: <LastStep />,
     icon: <SmileOutlined />,
   },
@@ -62,7 +62,7 @@ const MakeOrder = () => {
       <div className="steps-action" style={{ marginBottom: 260 }}>
         {current < steps.length - 1 && (
           <Button type="primary" onClick={() => next()}>
-            Next
+            Далее
           </Button>
         )}
         {current === steps.length - 1 && (
@@ -92,12 +92,12 @@ const MakeOrder = () => {
                 })
             }
           >
-            Done
+            Завершить
           </Button>
         )}
         {current > 0 && (
           <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
-            Previous
+            Назад
           </Button>
         )}
       </div>

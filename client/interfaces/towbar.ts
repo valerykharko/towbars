@@ -1,3 +1,6 @@
+import { IBodyStyle, IBrand, IGeneration, IModel } from "interfaces/car";
+import { IManufacturer } from "interfaces/manufacturer";
+
 export interface ITowbar {
   id: number;
   vendor_code: string;
@@ -21,6 +24,13 @@ export interface ITowbar {
   note: string;
   autoId: number;
   manufacturerId: number;
+  auto: {
+    brand: IBrand;
+    model: IModel;
+    generation: IGeneration;
+    bodyStyle: IBodyStyle;
+  };
+  manufacturer: IManufacturer;
 }
 
 export interface TowbarState {

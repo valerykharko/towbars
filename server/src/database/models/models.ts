@@ -78,14 +78,24 @@ export const Towbar: any = sequelize.define("towbar", {
 
 export const WiringKit: any = sequelize.define("wiring_kit", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  brandWK: { type: DataTypes.STRING, allowNull: false },
-  country: { type: DataTypes.STRING, allowNull: false },
   vendor_code: { type: DataTypes.STRING, allowNull: false },
   pin: { type: DataTypes.STRING, allowNull: false },
+  price: { type: DataTypes.FLOAT, allowNull: false },
+  connection_time: { type: DataTypes.STRING, allowNull: true },
+  weight: { type: DataTypes.FLOAT, allowNull: true },
+  turn_control: { type: DataTypes.STRING, allowNull: true },
+  disable_parking_sensors: { type: DataTypes.STRING, allowNull: true },
+  CAN_bus: { type: DataTypes.STRING, allowNull: true },
+  activation: { type: DataTypes.STRING, allowNull: true },
+  encoding: { type: DataTypes.STRING, allowNull: true },
+  permanent_plus: { type: DataTypes.STRING, allowNull: true },
+  charger: { type: DataTypes.STRING, allowNull: true },
+  with_block: { type: DataTypes.STRING, allowNull: true },
   img: { type: DataTypes.ARRAY(Sequelize.STRING), allowNull: true },
   doc: { type: DataTypes.ARRAY(Sequelize.STRING), allowNull: true },
-  price: { type: DataTypes.FLOAT, allowNull: true },
-  description: { type: DataTypes.STRING, allowNull: false },
+  video_link: { type: DataTypes.ARRAY(Sequelize.STRING), allowNull: true },
+  description: { type: DataTypes.STRING(3000), allowNull: true },
+  note: { type: DataTypes.FLOAT, allowNull: true },
 });
 
 export const Accessory: any = sequelize.define("accessory", {
